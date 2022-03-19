@@ -1,0 +1,64 @@
+##### _001_CsvToCassandra
+
+Create the following 2 tables in Cassandra
+
+CREATE keyspace if not exists demo
+WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
+
+CREATE table demo.movies (
+    movieId int primary key,
+    title text,
+    genres text
+);
+
+CREATE TABLE demo.ratings(
+    userId int, 
+    movieId int, 
+    rating float, 
+    timestamp bigint,
+    primary key ((userId), timestamp, movieId)
+) with clustering order by (timestamp desc);
+
+USE demo;
+
+SELECT * FROM movies LIMIT 10;
+SELECT * FROM ratings LIMIT 10;
+
+SELECT * FROM movies;
+SELECT * FROM ratings; 
+
+===========================================================================================
+
+
+CREATE SCHEMA `mycompanydb` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin ;
+
+CREATE TABLE `mycompanydb`.`employees` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  `surname` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`));
+
+
+INSERT INTO `mycompanydb`.`employees` (`name`, `surname`) VALUES ('Katerina', 'Lena');
+INSERT INTO `mycompanydb`.`employees` (`name`, `surname`) VALUES ('Anna', 'Svetlena');
+
+SELECT * FROM mycompanydb.employees;
+
+
+
+CREATE KEYSPACE mycompanydb
+WITH replication = {'class':'SimpleStrategy', 'replication_factor' : 2};
+
+use mycompanydb;
+
+CREATE TABLE employees(
+   id int PRIMARY KEY,
+   name text,
+   surname text
+);
+
+SELECT * FROM employees;
+
+
+SELECT * FROM employees WHERE ts=1 ORDER BY id DESC LIMIT N;
+SELECT * FROM movies LIMIT 5;
