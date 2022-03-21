@@ -1,0 +1,46 @@
+http://msvaljek.blogspot.com/2015/12/stream-processing-with-spring-kafka.html
+
+cd $KAFKA_HOME
+bin/zookeeper-server-start.sh config/zookeeper.properties
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+cd $KAFKA_HOME
+bin/kafka-server-start.sh config/server-1.properties
+
+cd $KAFKA_HOME
+bin/kafka-server-start.sh config/server-2.properties
+
+cd $KAFKA_HOME
+bin/kafka-server-start.sh config/server-3.properties
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+cd $KAFKA_HOME
+lsof -i:9093 | grep LISTEN
+lsof -i:9094 | grep LISTEN
+lsof -i:9095 | grep LISTEN
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+cd $KAFKA_HOME
+bin/kafka-console-producer.sh --broker-list localhost:9093 --topic my_replicated_topic
+
+cd $KAFKA_HOME
+bin/kafka-console-producer.sh --broker-list localhost:9094 --topic my_replicated_topic
+
+cd $KAFKA_HOME
+bin/kafka-console-producer.sh --broker-list localhost:9094 --topic my_replicated_topic
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+cd $KAFKA_HOME
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9093 --from-beginning --topic my_replicated_topic
+
+cd $KAFKA_HOME
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9094 --from-beginning --topic my_replicated_topic
+
+cd $KAFKA_HOME
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9095 --from-beginning --topic my_replicated_topic
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+{"employees":[{"name":"Lolo1", "technology":"Java1"}]}
+{"employees":[{"name":"Lolo2", "technology":"Java2"}]}
+{"employees":[{"name":"Lolo3", "technology":"Java3"}]}
