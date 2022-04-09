@@ -1,0 +1,14 @@
+[
+  {"name":"Katerina", 
+  "salary":3000,
+  "age":30 
+  },
+  {"name":"Yulya", "salary":4500,
+  "age":30 },
+  {"name":"Lena", "salary":3500,
+  "age":30 },
+  {"name":"Svetlana", "salary":4000,
+  "age":30 },
+  {"name":"Anya", "salary":3000,
+  "age":30 }
+]
